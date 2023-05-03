@@ -4,12 +4,15 @@ using UnityEngine;
 
 public class RunPlayerState : BasePlayerState
 {
+    private PlayerStateMachine _playerStateMachine;
     public RunPlayerState(PlayerMovement playerMovement, 
                              PlayerInputActions playerInputActions,
-                             CharacterController characterController) : base(playerMovement, 
+                             CharacterController characterController,
+                             PlayerStateMachine playerStateMachine) : base(playerMovement, 
                                                                              playerInputActions, 
                                                                              characterController)
     {
+        _playerStateMachine = playerStateMachine;
     }
 
     public override void EnterState()

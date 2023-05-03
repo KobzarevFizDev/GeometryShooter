@@ -4,12 +4,15 @@ using UnityEngine;
 
 public class IdlePlayerState : BasePlayerState
 {
+    private PlayerStateMachine _playerStateMachine;
     public IdlePlayerState(PlayerMovement playerMovement, 
                               PlayerInputActions playerInputActions,
-                              CharacterController characterController) : base(playerMovement, 
+                              CharacterController characterController,
+                              PlayerStateMachine playerStateMachine) : base(playerMovement, 
                                                                               playerInputActions,
                                                                               characterController)
     {
+        _playerStateMachine = playerStateMachine;
     }
 
     public override void EnterState()
@@ -22,7 +25,9 @@ public class IdlePlayerState : BasePlayerState
     {
         base.UpdateState();
         Debug.Log("Update to idle state");
-        //Debug.Log($"Move: {MoveInput}. Mouse: {MouseInput}");
+
+        if (MoveInput != Vector2.zero)
+            _playerStateMachine.SetWalkState();
     }
 
     public override void ExitState()

@@ -13,9 +13,9 @@ public class PlayerStateMachine
     {
         _statesMap = new Dictionary<Type, BasePlayerState>();
 
-        _statesMap[typeof(IdlePlayerState)] = new IdlePlayerState(playerMovement, playerInputActions, characterController);
-        _statesMap[typeof(WalkPlayerState)] = new WalkPlayerState(playerMovement, playerInputActions, characterController);
-        _statesMap[typeof(RunPlayerState)] = new RunPlayerState(playerMovement, playerInputActions, characterController);
+        _statesMap[typeof(IdlePlayerState)] = new IdlePlayerState(playerMovement, playerInputActions, characterController, this);
+        _statesMap[typeof(WalkPlayerState)] = new WalkPlayerState(playerMovement, playerInputActions, characterController, this);
+        _statesMap[typeof(RunPlayerState)] = new RunPlayerState(playerMovement, playerInputActions, characterController, this);
     }
 
     public void Update()

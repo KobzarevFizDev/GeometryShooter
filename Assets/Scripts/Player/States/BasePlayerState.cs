@@ -28,4 +28,9 @@ public class BasePlayerState
     }
     public virtual void ExitState() { }
 
+    private void RotateAround()
+    {
+
+    }
+
 }
