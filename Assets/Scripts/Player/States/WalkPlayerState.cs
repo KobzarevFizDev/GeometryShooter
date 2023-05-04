@@ -18,25 +18,22 @@ public class WalkPlayerState : BasePlayerState
     public override void EnterState()
     {
         base.EnterState();
-        Debug.Log("Enter to walk state");
     }
 
     public override void UpdateState()
     {
         base.UpdateState();
-        Debug.Log("Update to walk state");
-
-        if(MoveInput == Vector2.zero)
+        
+        if(MoveDirection == Vector3.zero)
             _playerStateMachine.SetIdleState();
 
 
         if (_playerMovement.IsGrounded())
-            _playerMovement.MoveToDirection(MoveInput);
+            _playerMovement.MoveForward(MoveDirection);
     }
 
     public override void ExitState()
     {
         base.ExitState();
-        Debug.Log("Exit from walk state");
     }
 }

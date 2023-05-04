@@ -18,21 +18,18 @@ public class IdlePlayerState : BasePlayerState
     public override void EnterState()
     {
         base.EnterState();
-        Debug.Log("Enter to idle state");
     }
 
     public override void UpdateState()
     {
         base.UpdateState();
-        Debug.Log("Update to idle state");
 
-        if (MoveInput != Vector2.zero)
+        if (MoveDirection != Vector3.zero)
             _playerStateMachine.SetWalkState();
     }
 
     public override void ExitState()
     {
         base.ExitState();
-        Debug.Log("Exit from exit state");
     }
 }

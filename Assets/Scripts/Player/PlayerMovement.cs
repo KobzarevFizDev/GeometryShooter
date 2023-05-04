@@ -7,7 +7,8 @@ public class PlayerMovement : MonoBehaviour
 {
     [Header("Raycast settings")]
     [SerializeField] private Transform _groundCheckerPivot;
-    [SerializeField] private float _radiusOfGroundSphereRaycast;
+    [SerializeField] private float _radiusOfGroundSphereRaycast = 1;
+    [SerializeField] private float _lengthOfRaycast = 1;
     [SerializeField] private LayerMask _groundRaycastMask;
 
     [Header("Movement settings")]
@@ -37,19 +38,28 @@ public class PlayerMovement : MonoBehaviour
     private void Update()
     {
         _playerStateMachine.Update();
+
+        IsGrounded();
     }
 
-    public void MoveToDirection(Vector3 moveDirection)
+    public void MoveForward(Vector3 moveDirection)
     {
+        moveDirection = new Vector3(-moveDirection.x, 0, -moveDirection.z);
         Vector3 projectOfMoveDirectionOnNormalOfGround = moveDirection - Vector3.Dot(moveDirection, NormalOfGround) * NormalOfGround;
-        Vector3 moveVector = projectOfMoveDirectionOnNormalOfGround * _speedOfMovement;
+        Vector3 moveVector = projectOfMoveDirectionOnNormalOfGround * _speedOfMovement * Time.deltaTime;
         _characterController.Move(moveVector);
+    }
+
+    public void Rotate(Vector2 rotationAngles)
+    {
+
     }
 
     public bool IsGrounded()
     {
         RaycastHit hitInfo;
-        if (Physics.SphereCast(_groundCheckerPivot.transform.position, _radiusOfGroundSphereRaycast, -Vector3.up, out hitInfo, _groundRaycastMask))
+        Ray ray = new Ray(_groundCheckerPivot.transform.position, -Vector3.up);
+        if (Physics.SphereCast(ray, _radiusOfGroundSphereRaycast, out hitInfo, _lengthOfRaycast, _groundRaycastMask))
         {
             NormalOfGround = hitInfo.normal;
             return true;
@@ -59,5 +69,11 @@ public class PlayerMovement : MonoBehaviour
             NormalOfGround = Vector3.zero;
             return false;
         }
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawSphere(_groundCheckerPivot.transform.position, _radiusOfGroundSphereRaycast);
     }
 }
