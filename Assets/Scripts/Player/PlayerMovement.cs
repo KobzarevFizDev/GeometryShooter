@@ -13,6 +13,7 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Movement settings")]
     [SerializeField] private float _speedOfMovement = 2f;
+    [SerializeField] private float _speedOfRotate = 3f;
 
     private CharacterController _characterController;
     private PlayerStateMachine _playerStateMachine;
@@ -42,17 +43,12 @@ public class PlayerMovement : MonoBehaviour
         IsGrounded();
     }
 
-    public void MoveForward(Vector3 moveDirection)
+    public void MoveForward(float horizontal, float vertical)
     {
-        moveDirection = new Vector3(-moveDirection.x, 0, -moveDirection.z);
+        Vector3 moveDirection = transform.forward * vertical + transform.right * horizontal;
         Vector3 projectOfMoveDirectionOnNormalOfGround = moveDirection - Vector3.Dot(moveDirection, NormalOfGround) * NormalOfGround;
         Vector3 moveVector = projectOfMoveDirectionOnNormalOfGround * _speedOfMovement * Time.deltaTime;
         _characterController.Move(moveVector);
-    }
-
-    public void Rotate(Vector2 rotationAngles)
-    {
-
     }
 
     public bool IsGrounded()

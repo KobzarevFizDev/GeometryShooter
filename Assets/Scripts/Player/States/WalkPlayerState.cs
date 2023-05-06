@@ -29,7 +29,7 @@ public class WalkPlayerState : BasePlayerState
 
 
         if (_playerMovement.IsGrounded())
-            _playerMovement.MoveForward(MoveDirection);
+            _playerMovement.MoveForward(Horizontal, Vertical);
     }
 
     public override void ExitState()

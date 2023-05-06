@@ -40,7 +40,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""name"": ""MousePosition"",
                     ""type"": ""Value"",
                     ""id"": ""901ca003-8c23-473e-89a5-7cb9b2152b83"",
-                    ""expectedControlType"": ""Vector2"",
+                    ""expectedControlType"": ""Double"",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true

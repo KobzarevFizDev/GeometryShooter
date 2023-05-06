@@ -10,6 +10,8 @@ public class BasePlayerState
 
     protected Vector3 MoveDirection { private set; get; }
     protected Vector2 MouseInput { private set; get; }
+    protected float Horizontal { private set; get; }
+    protected float Vertical { private set; get; }
 
     private Vector2 _oldMouseInput;
 
@@ -26,7 +28,6 @@ public class BasePlayerState
     public virtual void UpdateState() 
     {
         ReadPlayerInputs();
-        RotateAround();
     }
     public virtual void ExitState() { }
 
@@ -38,7 +39,9 @@ public class BasePlayerState
 
     private void ReadMoveInput()
     {
-        MoveDirection = new Vector3(_playerInputActions.Player.Move.ReadValue<Vector2>().x, 0, _playerInputActions.Player.Move.ReadValue<Vector2>().y);
+        Horizontal = _playerInputActions.Player.Move.ReadValue<Vector2>().x;
+        Vertical = _playerInputActions.Player.Move.ReadValue<Vector2>().y;
+        MoveDirection = new Vector3(Horizontal, 0, Vertical);
     }
 
     private void ReadMouseInput()
@@ -46,10 +49,5 @@ public class BasePlayerState
         Vector2 input = _playerInputActions.Player.MousePosition.ReadValue<Vector2>();
         MouseInput = input - _oldMouseInput;
         _oldMouseInput = input;
-    }
-
-    private void RotateAround()
-    {
-
     }
 }
