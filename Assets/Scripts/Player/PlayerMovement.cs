@@ -50,7 +50,8 @@ public class PlayerMovement : MonoBehaviour
     {
         _playerStateMachine.Update();
 
-        if (IsGrounded())
+        //if (IsGroundRaycast() && _yVelocity < 0)
+        if(IsGround())
             _yVelocity = -2f;
 
         DoGravity();
@@ -63,7 +64,7 @@ public class PlayerMovement : MonoBehaviour
         _characterController.Move(moveVector);
     }
 
-    public bool IsGrounded()
+    private bool IsGroundRaycast()
     {
         RaycastHit hitInfo;
         Ray ray = new Ray(_groundCheckerPivot.transform.position, -Vector3.up);
@@ -80,6 +81,11 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    public bool IsGround()
+    {
+        return IsGroundRaycast() && _yVelocity < 0;
+    }
+
     public void Jump()
     {
         _yVelocity = Mathf.Sqrt(_heightOfJump * -2 * _gravity);
@@ -88,7 +94,9 @@ public class PlayerMovement : MonoBehaviour
     private void DoGravity()
     {
         _yVelocity += _gravity * Time.deltaTime;
-        _characterController.Move(Vector3.up * _yVelocity);
+        _characterController.Move(Vector3.up * _yVelocity * Time.deltaTime);
+
+        Debug.Log($"Скорость y : {_yVelocity}");
     }
 
     private void OnDrawGizmos()

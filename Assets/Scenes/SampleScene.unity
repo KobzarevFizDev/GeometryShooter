@@ -608,7 +608,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1382071603}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.679, z: 0}
+  m_LocalPosition: {x: 0, y: 0.14, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -840,8 +840,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _groundCheckerPivot: {fileID: 1382071604}
-  _radiusOfGroundSphereRaycast: 1
-  _lengthOfRaycast: 1
+  _radiusOfGroundSphereRaycast: 0.5
+  _lengthOfRaycast: 2
   _groundRaycastMask:
     serializedVersion: 2
     m_Bits: 128

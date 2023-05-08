@@ -37,7 +37,7 @@ public class BasePlayerState
 
     private void CheckPossibilityOfMakingJump()
     {
-        if (_playerMovement.IsGrounded() && _playerMovement.YVelocity <= 0)
+        if (_playerMovement.IsGround())
         {
             _playerStateMachine.SetJumpState();
         }

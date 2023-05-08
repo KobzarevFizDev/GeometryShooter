@@ -18,13 +18,15 @@ public class JumpPlayerState : BasePlayerState
     public override void EnterState()
     {
         base.EnterState();
-
-        Debug.Log("JumpState");
+        _playerMovement.Jump();
     }
 
     public override void UpdateState()
     {
         base.UpdateState();
+
+        if (_playerMovement.IsGround())
+            _playerStateMachine.SetIdleState();
     }
 
     public override void ExitState()

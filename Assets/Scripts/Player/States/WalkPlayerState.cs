@@ -28,7 +28,7 @@ public class WalkPlayerState : BasePlayerState
             _playerStateMachine.SetIdleState();
 
 
-        if (_playerMovement.IsGrounded())
+        if (_playerMovement.IsGround())
             _playerMovement.MoveForward(_playerReadInput.Horizontal, _playerReadInput.Vertical);
     }
 
