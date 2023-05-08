@@ -18,18 +18,19 @@ public class RunPlayerState : BasePlayerState
     public override void EnterState()
     {
         base.EnterState();
-        Debug.Log("Enter to run state");
     }
 
     public override void UpdateState()
     {
         base.UpdateState();
-        Debug.Log("Update to run state");
+        if (!_playerReadInput.IsBoostMove)
+            _playerStateMachine.SetWalkState();
+
+        _playerMovement.MoveForward(_playerReadInput.Horizontal, _playerReadInput.Vertical, true);
     }
 
     public override void ExitState()
     {
         base.ExitState();
-        Debug.Log("Exit from run state");
     }
 }

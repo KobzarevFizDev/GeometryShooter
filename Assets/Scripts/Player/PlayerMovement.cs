@@ -12,7 +12,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private LayerMask _groundRaycastMask;
 
     [Header("Movement settings")]
-    [SerializeField] private float _speedOfMovement = 2f;
+    [SerializeField] private float _speedOfWalk = 2f;
+    [SerializeField] private float _speedOfRun = 4f;
     [SerializeField] private float _speedOfRotate = 3f;
 
     [Header("Jump settings")]
@@ -50,17 +51,17 @@ public class PlayerMovement : MonoBehaviour
     {
         _playerStateMachine.Update();
 
-        //if (IsGroundRaycast() && _yVelocity < 0)
         if(IsGround())
             _yVelocity = -2f;
 
         DoGravity();
     }
 
-    public void MoveForward(float horizontal, float vertical)
+    public void MoveForward(float horizontal, float vertical, bool isBoost)
     {
+        float speed = isBoost ? _speedOfRun : _speedOfWalk;
         Vector3 moveDirection = transform.forward * vertical + transform.right * horizontal;
-        Vector3 moveVector = moveDirection * _speedOfMovement * Time.deltaTime;
+        Vector3 moveVector = moveDirection * speed * Time.deltaTime;
         _characterController.Move(moveVector);
     }
 
@@ -95,8 +96,6 @@ public class PlayerMovement : MonoBehaviour
     {
         _yVelocity += _gravity * Time.deltaTime;
         _characterController.Move(Vector3.up * _yVelocity * Time.deltaTime);
-
-        Debug.Log($"Скорость y : {_yVelocity}");
     }
 
     private void OnDrawGizmos()

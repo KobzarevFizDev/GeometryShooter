@@ -27,9 +27,11 @@ public class WalkPlayerState : BasePlayerState
         if(_playerReadInput.MoveDirection == Vector3.zero)
             _playerStateMachine.SetIdleState();
 
+        if (_playerReadInput.IsBoostMove)
+            _playerStateMachine.SetRunState();
 
         if (_playerMovement.IsGround())
-            _playerMovement.MoveForward(_playerReadInput.Horizontal, _playerReadInput.Vertical);
+            _playerMovement.MoveForward(_playerReadInput.Horizontal, _playerReadInput.Vertical, false);
     }
 
     public override void ExitState()
