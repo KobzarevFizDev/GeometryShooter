@@ -4,30 +4,31 @@ using UnityEngine;
 
 public class IdlePlayerState : BasePlayerState
 {
-    public IdlePlayerState(PlayerMovement playerMovement, 
-                              PlayerInputActions playerInputActions,
-                              CharacterController characterController) : base(playerMovement, 
-                                                                              playerInputActions,
-                                                                              characterController)
+    public IdlePlayerState(PlayerMovement playerMovement,
+                           CharacterController characterController,
+                           PlayerStateMachine playerStateMachine,
+                           PlayerReadInput playerReadInput) : base(playerMovement,
+                                                                   characterController,
+                                                                   playerReadInput,
+                                                                   playerStateMachine)
     {
     }
 
     public override void EnterState()
     {
         base.EnterState();
-        Debug.Log("Enter to idle state");
     }
 
     public override void UpdateState()
     {
         base.UpdateState();
-        Debug.Log("Update to idle state");
-        //Debug.Log($"Move: {MoveInput}. Mouse: {MouseInput}");
+
+        if (_playerReadInput.MoveDirection != Vector3.zero)
+            _playerStateMachine.SetWalkState();
     }
 
     public override void ExitState()
     {
         base.ExitState();
-        Debug.Log("Exit from exit state");
     }
 }

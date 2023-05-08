@@ -4,29 +4,33 @@ using UnityEngine;
 
 public class RunPlayerState : BasePlayerState
 {
-    public RunPlayerState(PlayerMovement playerMovement, 
-                             PlayerInputActions playerInputActions,
-                             CharacterController characterController) : base(playerMovement, 
-                                                                             playerInputActions, 
-                                                                             characterController)
+    public RunPlayerState(PlayerMovement playerMovement,
+                             CharacterController characterController,
+                             PlayerStateMachine playerStateMachine,
+                             PlayerReadInput playerReadInput) : base(playerMovement, 
+                                                                     characterController,
+                                                                     playerReadInput,
+                                                                     playerStateMachine)
     {
+
     }
 
     public override void EnterState()
     {
         base.EnterState();
-        Debug.Log("Enter to run state");
     }
 
     public override void UpdateState()
     {
         base.UpdateState();
-        Debug.Log("Update to run state");
+        if (!_playerReadInput.IsBoostMove)
+            _playerStateMachine.SetWalkState();
+
+        _playerMovement.MoveForward(_playerReadInput.Horizontal, _playerReadInput.Vertical, true);
     }
 
     public override void ExitState()
     {
         base.ExitState();
-        Debug.Log("Exit from run state");
     }
 }
