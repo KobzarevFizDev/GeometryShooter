@@ -33,12 +33,15 @@ public class PlayerMovement : MonoBehaviour
 
     public float YVelocity => _yVelocity;
 
+    public void Inject(PlayerReadInput playerReadInput)
+    {
+        _playerReadInput = playerReadInput;
+    }
+
     private void Awake()
     {
         _characterController = GetComponent<CharacterController>();
         _playerStateMachine = new PlayerStateMachine();
-
-        _playerReadInput = new PlayerReadInput();
     }
 
     private void Start()
