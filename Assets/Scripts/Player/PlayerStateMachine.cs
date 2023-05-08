@@ -9,13 +9,14 @@ public class PlayerStateMachine
     private Dictionary<Type, BasePlayerState> _statesMap;
     public void Initialize(PlayerMovement playerMovement, 
                            CharacterController characterController,
-                           PlayerInputActions playerInputActions)
+                           PlayerReadInput playerReadInput)
     {
         _statesMap = new Dictionary<Type, BasePlayerState>();
 
-        _statesMap[typeof(IdlePlayerState)] = new IdlePlayerState(playerMovement, playerInputActions, characterController, this);
-        _statesMap[typeof(WalkPlayerState)] = new WalkPlayerState(playerMovement, playerInputActions, characterController, this);
-        _statesMap[typeof(RunPlayerState)] = new RunPlayerState(playerMovement, playerInputActions, characterController, this);
+        _statesMap[typeof(IdlePlayerState)] = new IdlePlayerState(playerMovement, characterController, this, playerReadInput);
+        _statesMap[typeof(WalkPlayerState)] = new WalkPlayerState(playerMovement, characterController, this, playerReadInput);
+        _statesMap[typeof(RunPlayerState)] = new RunPlayerState(playerMovement, characterController, this, playerReadInput);
+        _statesMap[typeof(JumpPlayerState)] = new JumpPlayerState(playerMovement, characterController, this, playerReadInput);
     }
 
     public void Update()
@@ -37,6 +38,11 @@ public class PlayerStateMachine
     public void SetRunState()
     {
         SetState<RunPlayerState>();
+    }
+
+    public void SetJumpState()
+    {
+        SetState<JumpPlayerState>();
     }
 
     private T GetState<T>() where T : BasePlayerState

@@ -4,15 +4,14 @@ using UnityEngine;
 
 public class IdlePlayerState : BasePlayerState
 {
-    private PlayerStateMachine _playerStateMachine;
-    public IdlePlayerState(PlayerMovement playerMovement, 
-                              PlayerInputActions playerInputActions,
-                              CharacterController characterController,
-                              PlayerStateMachine playerStateMachine) : base(playerMovement, 
-                                                                              playerInputActions,
-                                                                              characterController)
+    public IdlePlayerState(PlayerMovement playerMovement,
+                           CharacterController characterController,
+                           PlayerStateMachine playerStateMachine,
+                           PlayerReadInput playerReadInput) : base(playerMovement,
+                                                                   characterController,
+                                                                   playerReadInput,
+                                                                   playerStateMachine)
     {
-        _playerStateMachine = playerStateMachine;
     }
 
     public override void EnterState()
@@ -24,7 +23,7 @@ public class IdlePlayerState : BasePlayerState
     {
         base.UpdateState();
 
-        if (MoveDirection != Vector3.zero)
+        if (_playerReadInput.MoveDirection != Vector3.zero)
             _playerStateMachine.SetWalkState();
     }
 

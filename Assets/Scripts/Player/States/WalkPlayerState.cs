@@ -4,15 +4,15 @@ using UnityEngine;
 
 public class WalkPlayerState : BasePlayerState
 {
-    private PlayerStateMachine _playerStateMachine;
-    public WalkPlayerState(PlayerMovement playerMovement, 
-                              PlayerInputActions playerInputActions,
-                              CharacterController characterController,
-                              PlayerStateMachine playerStateMachine) : base(playerMovement, 
-                                                                              playerInputActions,
-                                                                              characterController)
+    public WalkPlayerState(PlayerMovement playerMovement,
+                           CharacterController characterController,
+                           PlayerStateMachine playerStateMachine,
+                           PlayerReadInput playerReadInput) : base(playerMovement,
+                                                                   characterController,
+                                                                   playerReadInput,
+                                                                   playerStateMachine)
     {
-        _playerStateMachine = playerStateMachine;
+
     }
 
     public override void EnterState()
@@ -24,12 +24,12 @@ public class WalkPlayerState : BasePlayerState
     {
         base.UpdateState();
         
-        if(MoveDirection == Vector3.zero)
+        if(_playerReadInput.MoveDirection == Vector3.zero)
             _playerStateMachine.SetIdleState();
 
 
         if (_playerMovement.IsGrounded())
-            _playerMovement.MoveForward(Horizontal, Vertical);
+            _playerMovement.MoveForward(_playerReadInput.Horizontal, _playerReadInput.Vertical);
     }
 
     public override void ExitState()

@@ -5,49 +5,42 @@ using UnityEngine;
 public class BasePlayerState
 {
     protected PlayerMovement _playerMovement;
-    protected PlayerInputActions _playerInputActions;
     protected CharacterController _characterController;
+    protected PlayerReadInput _playerReadInput;
+    protected PlayerStateMachine _playerStateMachine;
 
-    protected Vector3 MoveDirection { private set; get; }
-    protected Vector2 MouseInput { private set; get; }
-    protected float Horizontal { private set; get; }
-    protected float Vertical { private set; get; }
-
-    private Vector2 _oldMouseInput;
-
-    public BasePlayerState(PlayerMovement playerMovement, 
-                              PlayerInputActions playerInputActions,
-                              CharacterController characterController)
+    public BasePlayerState(PlayerMovement playerMovement,
+                           CharacterController characterController,
+                           PlayerReadInput playerReadInput,
+                           PlayerStateMachine playerStateMachine)
     {
         _playerMovement = playerMovement;
-        _playerInputActions = playerInputActions;
         _characterController = characterController;
+        _playerReadInput = playerReadInput;
+        _playerStateMachine = playerStateMachine;
     }
 
-    public virtual void EnterState() { }
+    public virtual void EnterState() 
+    {
+        _playerReadInput.JumpEvent += CheckPossibilityOfMakingJump;
+    }
     public virtual void UpdateState() 
     {
-        ReadPlayerInputs();
-    }
-    public virtual void ExitState() { }
+        _playerReadInput.ReadInputs();
 
-    private void ReadPlayerInputs()
-    {
-        ReadMouseInput();
-        ReadMoveInput();
-    }
 
-    private void ReadMoveInput()
+    }
+    public virtual void ExitState() 
     {
-        Horizontal = _playerInputActions.Player.Move.ReadValue<Vector2>().x;
-        Vertical = _playerInputActions.Player.Move.ReadValue<Vector2>().y;
-        MoveDirection = new Vector3(Horizontal, 0, Vertical);
+        _playerReadInput.JumpEvent -= CheckPossibilityOfMakingJump;
     }
 
-    private void ReadMouseInput()
+    private void CheckPossibilityOfMakingJump()
     {
-        Vector2 input = _playerInputActions.Player.MousePosition.ReadValue<Vector2>();
-        MouseInput = input - _oldMouseInput;
-        _oldMouseInput = input;
+        if (_playerMovement.IsGrounded() && _playerMovement.YVelocity <= 0)
+        {
+            _playerStateMachine.SetJumpState();
+        }
     }
+
 }
