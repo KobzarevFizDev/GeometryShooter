@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Zenject;
 
 public abstract class BaseWeapon : MonoBehaviour
 {
@@ -12,6 +13,8 @@ public abstract class BaseWeapon : MonoBehaviour
     [SerializeField] protected float _v0ForBullet;
 
     protected PlayerReadInput _playerReadInput;
+
+    [Inject]
     public void Inject(PlayerReadInput playerReadInput)
     {
         _playerReadInput = playerReadInput;

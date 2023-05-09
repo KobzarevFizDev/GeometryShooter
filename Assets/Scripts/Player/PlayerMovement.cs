@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Zenject;
 
 [RequireComponent(typeof(CharacterController))]
 public class PlayerMovement : MonoBehaviour
@@ -33,6 +34,7 @@ public class PlayerMovement : MonoBehaviour
 
     public float YVelocity => _yVelocity;
 
+    [Inject]
     public void Inject(PlayerReadInput playerReadInput)
     {
         _playerReadInput = playerReadInput;
