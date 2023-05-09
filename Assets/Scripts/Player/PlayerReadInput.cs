@@ -13,17 +13,34 @@ public class PlayerReadInput
     public Vector3 MoveDirection { private set; get; }
     public Vector2 MouseInput { private set; get; }
     public bool IsBoostMove { private set; get; }
+    public bool IsShooting { private set; get; }
 
 
     public Action JumpEvent;
     public Action BoostEvent;
+    public Action StartShotEvent;
+    public Action StopShotEvent;
     public PlayerReadInput()
     {
         _playerInputActions = new PlayerInputActions();
         _playerInputActions.Player.Jump.started += (UnityEngine.InputSystem.InputAction.CallbackContext obj) => JumpEvent?.Invoke();
+        _playerInputActions.Player.Shot.started += StartShot;
+        _playerInputActions.Player.Shot.canceled += StopShot;
         _playerInputActions.Player.Boost.started += ActiveBoostMode;
         _playerInputActions.Player.Boost.canceled += DeactiveBoostMode;
         _playerInputActions.Enable();
+    }
+
+    private void StartShot(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+    {
+        IsShooting = true;
+        StopShotEvent?.Invoke();
+    }
+
+    private void StopShot(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+    {
+        IsShooting = false;
+        StartShotEvent?.Invoke();
     }
 
     public void ReadInputs()
