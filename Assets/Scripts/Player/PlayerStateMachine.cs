@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class PlayerStateMachine
+public class PlayerStateMachine : StateMachineBase
 {
-    private BasePlayerState _currentState;
     private Dictionary<Type, BasePlayerState> _statesMap;
     public void Initialize(PlayerMovement playerMovement, 
                            CharacterController characterController,
@@ -17,12 +16,6 @@ public class PlayerStateMachine
         _statesMap[typeof(WalkPlayerState)] = new WalkPlayerState(playerMovement, characterController, this, playerReadInput);
         _statesMap[typeof(RunPlayerState)] = new RunPlayerState(playerMovement, characterController, this, playerReadInput);
         _statesMap[typeof(JumpPlayerState)] = new JumpPlayerState(playerMovement, characterController, this, playerReadInput);
-    }
-
-    public void Update()
-    {
-        if (null != _currentState)
-            _currentState.UpdateState();
     }
 
     public void SetIdleState()

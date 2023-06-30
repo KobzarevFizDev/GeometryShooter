@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BasePlayerState
+public class BasePlayerState : StateBase
 {
     protected PlayerMovement _playerMovement;
     protected CharacterController _characterController;
@@ -20,19 +20,19 @@ public class BasePlayerState
         _playerStateMachine = playerStateMachine;
     }
 
-    public virtual void EnterState() 
+    public override void EnterState()
     {
         _playerReadInput.JumpEvent += CheckPossibilityOfMakingJump;
     }
-    public virtual void UpdateState() 
-    {
-        _playerReadInput.ReadInputs();
 
-
-    }
-    public virtual void ExitState() 
+    public override void ExitState()
     {
         _playerReadInput.JumpEvent -= CheckPossibilityOfMakingJump;
+    }
+
+    public override void UpdateState()
+    {
+        _playerReadInput.ReadInputs();
     }
 
     private void CheckPossibilityOfMakingJump()
@@ -42,5 +42,4 @@ public class BasePlayerState
             _playerStateMachine.SetJumpState();
         }
     }
-
 }
