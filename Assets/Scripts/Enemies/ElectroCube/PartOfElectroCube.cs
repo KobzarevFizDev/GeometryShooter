@@ -10,7 +10,7 @@ public class PartOfElectroCube : MonoBehaviour
 
     public Action<PartOfElectroCube> HitEvent;
 
-    public int IdOfPart { get; set; }
+    public int IdOfPart;
 
     private void OnCollisionEnter(Collision collision)
     {
@@ -27,7 +27,6 @@ public class PartOfElectroCube : MonoBehaviour
 
     public void DiscardDamagedPart(Vector3 velocityDiscard, float timeToExplosion)
     {
-        print($"discard: {velocityDiscard}");
         var rg = GetComponent<Rigidbody>();
         rg.useGravity = true;
         rg.isKinematic = false;

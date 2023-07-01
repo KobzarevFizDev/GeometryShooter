@@ -4,18 +4,31 @@ using UnityEngine;
 
 public class PatrolStateElectroCube : BaseElectroCubeState
 {
+    private Transform _currentPatrolPoint;
+    public PatrolStateElectroCube(ElectroCube electroCube, 
+        ElectroCubeStateMachine electroCubeStateMachine) : 
+        base(electroCube, electroCubeStateMachine) { }
+    
     public override void EnterState()
     {
-        throw new System.NotImplementedException();
+         _currentPatrolPoint = _electroCube.FindAvailablePatrolPoint();
     }
 
     public override void ExitState()
     {
-        throw new System.NotImplementedException();
+
     }
 
     public override void UpdateState()
     {
-        throw new System.NotImplementedException();
+        Vector3 dir = _currentPatrolPoint.transform.position - _electroCube.transform.position;
+        dir.y = 0;
+        dir = dir.normalized;
+        _electroCube.transform.Translate(dir * Time.deltaTime);
+
+        if (_electroCube.IsPlayerCloseEnoughToAttack)
+        {
+            _electroCubeStateMachine.SetShotState();
+        }
     }
 }

@@ -6,13 +6,13 @@ using System;
 public class ElectroCubeStateMachine : StateMachineBase
 {
     private Dictionary<Type, BaseElectroCubeState> _statesMap;
-    
-    public void Initialize()
+
+    public void Initialize(ElectroCube electroCube)
     {
         _statesMap = new Dictionary<Type, BaseElectroCubeState>();
 
-        _statesMap[typeof(PatrolStateElectroCube)] = new PatrolStateElectroCube();
-        _statesMap[typeof(ShotStateElectroCube)] = new ShotStateElectroCube();
+        _statesMap[typeof(PatrolStateElectroCube)] = new PatrolStateElectroCube(electroCube, this);
+        _statesMap[typeof(ShotStateElectroCube)] = new ShotStateElectroCube(electroCube, this);
     }
 
     public void SetPatrolState()
