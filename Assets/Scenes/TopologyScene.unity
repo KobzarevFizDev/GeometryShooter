@@ -135,7 +135,6 @@ GameObject:
   - component: {fileID: 643179162}
   - component: {fileID: 643179161}
   - component: {fileID: 643179160}
-  - component: {fileID: 643179164}
   m_Layer: 0
   m_Name: Sphere
   m_TagString: Untagged
@@ -221,19 +220,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &643179164
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 643179158}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 784119056cc6b8944b39f09ce7550842, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _voxelPrefab: {fileID: 1195395710}
 --- !u!1 &676203028
 GameObject:
   m_ObjectHideFlags: 0
@@ -509,12 +495,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1195395710 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 16361786186927995, guid: 69b9446e09b4fe24e884214df4ded869,
-    type: 3}
-  m_PrefabInstance: {fileID: 5978476471086387913}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &4813163785700115258
 Transform:
   m_ObjectHideFlags: 0
