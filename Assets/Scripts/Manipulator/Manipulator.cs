@@ -2,16 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(ManipulatorPosition))]
 public class Manipulator : MonoBehaviour
 {
-    private ManipulatorPosition _manipulatorPosition;
+    [SerializeField] private ManipulatorPosition _manipulatorPosition;
+    [SerializeField] private ClampManipulator _clampManipulator;
 
-    private bool _movementSwitch = false;
     private void Awake()
     {
-        _manipulatorPosition = GetComponent<ManipulatorPosition>();
-
         OnReachedUnloadingPoint();
     }
 
@@ -20,6 +17,9 @@ public class Manipulator : MonoBehaviour
         _manipulatorPosition.ReachedLoadingPoint -= OnReachedLoadingPoint;
         _manipulatorPosition.ReachedUnloadingPoint += OnReachedUnloadingPoint;
         _manipulatorPosition.MoveToUnoadingPoint();
+
+        _clampManipulator.TakeCargo();
+
         print("OnReachedLoadingPoint");
     }
 
@@ -28,6 +28,9 @@ public class Manipulator : MonoBehaviour
         _manipulatorPosition.ReachedLoadingPoint += OnReachedLoadingPoint;
         _manipulatorPosition.ReachedUnloadingPoint -= OnReachedUnloadingPoint;
         _manipulatorPosition.MoveToLoadingPoint();
+
+        _clampManipulator.ReleaseCargo();
+
         print("OnReachedUnloadingPoint");
     }
 }

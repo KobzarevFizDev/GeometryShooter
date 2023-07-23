@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-// Rename - не манипулятор, а положение руки
 public class ManipulatorPosition : MonoBehaviour
 {
     [SerializeField] private BezierCurve _bezierCurve;
