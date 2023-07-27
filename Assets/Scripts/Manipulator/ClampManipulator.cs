@@ -1,8 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Animations;
 
-[RequireComponent(typeof(FixedJoint))]
 public class ClampManipulator : MonoBehaviour
 {
     [SerializeField] private Transform _leftRetainer;
@@ -10,33 +8,24 @@ public class ClampManipulator : MonoBehaviour
     [SerializeField] private Transform _spawnCargoPoint;
     [SerializeField] private GameObject _cargoPrefab;
 
+    private ParentConstraint _cargoConstraint;
     private GameObject _cargo;
-
-    private FixedJoint _fixedJoint;
-
-    private void Start()
-    {
-        _fixedJoint = GetComponent<FixedJoint>();
-    }
 
     public void TakeCargo()
     {
         _cargo = Instantiate(_cargoPrefab);
         _cargo.transform.position = transform.position;
-        var cargoRG = _cargo.GetComponent<Rigidbody>();
-        _fixedJoint.connectedBody = cargoRG;
-        cargoRG.isKinematic = false;
-        cargoRG.useGravity = false;
+
+        _cargoConstraint = _cargo.AddComponent<ParentConstraint>();
+        ConstraintSource constraintSource = new ConstraintSource();
+        constraintSource.weight = 1f;
+        constraintSource.sourceTransform = _spawnCargoPoint;
+        _cargoConstraint.AddSource(constraintSource);
+        _cargoConstraint.constraintActive = true;
     }
 
     public void ReleaseCargo()
     {
-        if (null == _cargo)
-            return;
-
-        var cargoRG = _cargo.GetComponent<Rigidbody>();
-        _fixedJoint.connectedBody = null;
-        cargoRG.isKinematic = false;
-        cargoRG.useGravity = true;
+        Destroy(_cargoConstraint);
     }
 }
